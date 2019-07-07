@@ -15,6 +15,7 @@ interface Post {
 
     // region Defaults
 
+    var type: String
     /**
      * The short name used to uniquely identify a blog.
      */
@@ -327,7 +328,7 @@ interface Post {
          * TODO: Documentation
          */
         @Json(name = "blocks")
-        Block("blocks")
+        Blocks("blocks")
     }
 
     /**

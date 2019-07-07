@@ -15,8 +15,9 @@ import com.squareup.moshi.ToJson
  */
 internal class ColorsJsonAdapter(moshi: Moshi) {
 
-    private val nullableColorAdapter: JsonAdapter<Color?> =
-        moshi.adapter(Color::class.java, kotlin.collections.emptySet(), null)
+    private val nullableColorAdapter: JsonAdapter<Color?> by lazy {
+        moshi.adapter<Color?>(Color::class.java, emptySet(), null)
+    }
 
     override fun toString(): String = "JsonAdapter(Colors)"
 

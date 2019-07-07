@@ -7,6 +7,8 @@ import com.highthunder.kotlr.types.ReblogData
 import com.highthunder.kotlr.types.Trail
 import com.highthunder.kotlr.types.content.BlockLayout
 import com.highthunder.kotlr.types.content.PostContent
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 /**
  * LinkPost - A legacy link post.
@@ -84,72 +86,142 @@ import com.highthunder.kotlr.types.content.PostContent
  * @param photos Photos to give a preview of the article that the link points to.
  * @param body TODO: Documentation
  */
-data class LinkPost(
+@JsonClass(generateAdapter = true)
+data class LinkPost constructor(
+    @Json(name = "blog_name")
     override var blogName: String? = null,
+    @Json(name = "id")
     override val id: Long? = null,
+    @Json(name = "blog")
     override val blog: Blog? = null,
+    @Json(name = "post_url")
     override val postUrl: String? = null,
+    @Json(name = "timestamp")
     override val timestamp: Long? = null,
+    @Json(name = "date")
     override val date: String? = null,
+    @Json(name = "format")
     override var format: Post.PostFormat? = null,
+    @Json(name = "reblog_key")
     override val reblogKey: String? = null,
+    @Json(name = "tags")
     override var tags: List<String>? = null,
+    @Json(name = "bookmarklet")
     override var isBookmarklet: Boolean? = null,
+    @Json(name = "mobile")
     override var isMobile: Boolean? = null,
+    @Json(name = "source_url")
     override var sourceUrl: String? = null,
+    @Json(name = "source_title")
     override var sourceTitle: String? = null,
+    @Json(name = "liked")
     override val isLiked: Boolean? = null,
+    @Json(name = "state")
     override var state: Post.State? = null,
+    @Json(name = "total_posts")
     override val totalPosts: Int? = null,
+    @Json(name = "is_anonymous")
     override var anonymous: Boolean? = null,
+    @Json(name = "content")
     override var content: List<PostContent>? = null,
+    @Json(name = "trail")
     override var trail: List<Trail>? = null,
+    @Json(name = "layout")
     override var layout: List<BlockLayout>? = null,
+    @Json(name = "post_author")
     override var postAuthor: String? = null,
+    @Json(name = "short_url")
     override var shortUrl: String? = null,
+    @Json(name = "summary")
     override var summary: String? = null,
+    @Json(name = "is_blocks_post_format")
     override var isBlocksFormat: Boolean? = null,
+    @Json(name = "liked_timestamp")
     override val likedTimestamp: Long? = null,
+    @Json(name = "slug")
     override var slug: String? = null,
+    @Json(name = "note_count")
     override var noteCount: Long? = null,
+    @Json(name = "recommended_source")
     override val recommendedSource: String? = null,
+    @Json(name = "recommended_color")
     override val recommendedColor: String? = null,
+    @Json(name = "post_author_is_adult")
     override val postAuthorIsAdult: Boolean? = null,
+    @Json(name = "is_submission")
     override var isSubmission: Boolean? = null,
+    @Json(name = "can_like")
     override var canLike: Boolean? = null,
+    @Json(name = "can_reblog")
     override var canReblog: Boolean? = null,
+    @Json(name = "can_send_in_message")
     override var canSendInMessage: Boolean? = null,
+    @Json(name = "can_reply")
     override var canReply: Boolean? = null,
+    @Json(name = "display_avatar")
     override val displayAvatar: Boolean? = null,
+    @Json(name = "followed")
     override val followed: Boolean? = null,
+    @Json(name = "reblog")
     override var reblogData: ReblogData? = null,
+    @Json(name = "reblogged_from_id")
     override val rebloggedFromId: Long? = null,
+    @Json(name = "reblogged_from_url")
     override val rebloggedFromUrl: String? = null,
+    @Json(name = "reblogged_from_name")
     override val rebloggedFromName: String? = null,
+    @Json(name = "reblogged_from_title")
     override val rebloggedFromTitle: String? = null,
+    @Json(name = "reblogged_from_uuid")
     override val rebloggedFromUuid: String? = null,
+    @Json(name = "reblogged_from_can_message")
     override val rebloggedFromCanMessage: Boolean? = null,
+    @Json(name = "reblogged_from_following")
     override val rebloggedFromFollowing: Boolean? = null,
+    @Json(name = "reblogged_root_id")
     override val rebloggedRootId: Long? = null,
+    @Json(name = "reblogged_root_url")
     override val rebloggedRootUrl: String? = null,
+    @Json(name = "reblogged_root_name")
     override val rebloggedRootName: String? = null,
+    @Json(name = "reblogged_root_title")
     override val rebloggedRootTitle: String? = null,
+    @Json(name = "reblogged_root_uuid")
     override val rebloggedRootUuid: String? = null,
+    @Json(name = "reblogged_root_can_message")
     override val rebloggedRootCanMessage: Boolean? = null,
+    @Json(name = "reblogged_root_following")
     override val rebloggedRootFollowing: Boolean? = null,
+    @Json(name = "notes")
     override val notes: List<NoteData>? = null,
+    @Json(name = "scheduled_publish_time")
     override val publishTime: Long?,
+    @Json(name = "queued_state")
     override val queueState: Post.QueueState?,
+    @Json(name = "should_open_in_legacy")
     override val shouldOpenInLegacy: Boolean?,
+    @Json(name = "title")
     var title: String? = null,
+    @Json(name = "description")
     var description: String? = null,
+    @Json(name = "url")
     var url: String? = null,
+    @Json(name = "author")
     var author: String? = null,
+    @Json(name = "link_author")
     var linkAuthor: String? = null,
+    @Json(name = "link_image")
     var linkImage: String? = null,
+    @Json(name = "link_image_dimensions")
     var linkImageDimensions: PhotoSize? = null,
+    @Json(name = "excerpt")
     var excerpt: String? = null,
+    @Json(name = "publisher")
     var publisher: String? = null,
+    @Json(name = "photos")
     var photos: List<Photo>? = null,
+    @Json(name = "body")
     var body: String? = null
-) : Post
+) : Post {
+    override var type: String = Post.Type.Link.key
+}

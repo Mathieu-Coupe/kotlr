@@ -8,24 +8,25 @@ import com.squareup.moshi.JsonClass
  * vertical stack, you can use the optional layout block alongside the content block array.
  * The layout block holds an array of layouts. Each layout object requires a type field,
  * just like content blocks.
- *TODO: Documentation
+ *
  * @author highthunder
  * @since 10/20/18
  * @version 1.0.0
  */
 sealed class BlockLayout {
+    abstract var type: String?
 
     /**
      * Vertical Layout - The default layout type, each content block should be placed below the
      * previous block.
      */
+    @JsonClass(generateAdapter = true)
     class Vertical : BlockLayout() {
         companion object {
-            /**
-             *  TODO: Documentation
-             */
             const val KEY: String = "vertical"
         }
+
+        override var type: String? = KEY
     }
 
     /**
@@ -34,17 +35,19 @@ sealed class BlockLayout {
      * @param rows This is an array of the rows and block indices per row, for basic row layouts.
      * @param display This is an array of display objects per row, see [BlockLayout.Row.Display].
      */
-    class Row(
+    @JsonClass(generateAdapter = true)
+    class Row constructor(
+        @Json(name = "rows")
         var rows: List<List<Int>>? = null,
+        @Json(name = "display")
         var display: List<Display>? = null
     ) : BlockLayout() {
 
         companion object {
-            /**
-             *  TODO: Documentation
-             */
             const val KEY: String = "rows"
         }
+
+        override var type: String? = KEY
 
         /**
          *  TODO: Documentation
@@ -65,28 +68,30 @@ sealed class BlockLayout {
              */
             sealed class Mode {
 
+                abstract var type: String?
+
                 /**
                  *  TODO: Documentation
                  */
+                @JsonClass(generateAdapter = true)
                 class Weighted : Mode() {
                     companion object {
-                        /**
-                         *  TODO: Documentation
-                         */
                         const val KEY: String = "weighted"
                     }
+
+                    override var type: String? = KEY
                 }
 
                 /**
                  *  TODO: Documentation
                  */
+                @JsonClass(generateAdapter = true)
                 class Carousel : Mode() {
                     companion object {
-                        /**
-                         *  TODO: Documentation
-                         */
                         const val KEY: String = "carousel"
                     }
+
+                    override var type: String? = KEY
                 }
             }
         }
@@ -97,15 +102,16 @@ sealed class BlockLayout {
      *
      * @param blocks This is an array of block indices that are a part of the truncated version of the Post.
      */
-    class Condensed(
+    @JsonClass(generateAdapter = true)
+    class Condensed constructor(
+        @Json(name = "blocks")
         var blocks: List<Int>? = null
     ) : BlockLayout() {
         companion object {
-            /**
-             *  TODO: Documentation
-             */
             const val KEY: String = "condensed"
         }
+
+        override var type: String? = KEY
     }
 
     /**
@@ -114,15 +120,17 @@ sealed class BlockLayout {
      * @param blocks This is an array of block indices that are a part of the ask content of the Post.
      * @param attribution If the ask is not anonymous, this will include information about the blog that submitted the ask.
      */
-    class Ask(
+    @JsonClass(generateAdapter = true)
+    class Ask constructor(
+        @Json(name = "blocks")
         var blocks: List<Int>? = null,
+        @Json(name = "attribution")
         var attribution: Attribution? = null
     ) : BlockLayout() {
         companion object {
-            /**
-             *  TODO: Documentation
-             */
             const val KEY: String = "ask"
         }
+
+        override var type: String? = KEY
     }
 }

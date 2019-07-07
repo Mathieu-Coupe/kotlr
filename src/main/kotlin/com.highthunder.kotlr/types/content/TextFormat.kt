@@ -3,6 +3,7 @@ package com.highthunder.kotlr.types.content
 import com.highthunder.kotlr.json.qualifier.HexColorOctothorpe
 import com.highthunder.kotlr.types.Blog
 import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 /**
  * TextFormat - In addition to subtypes at the Text block level, the text within a Text block
@@ -28,54 +29,62 @@ import com.squareup.moshi.Json
  * @param start The starting index of the formatting range (inclusive).
  * @param end The ending index of the formatting range (exclusive).
  */
-sealed class TextFormat(
-    var start: Int?,
-    var end: Int?
-) {
+sealed class TextFormat {
+    abstract var start: Int?
+
+    abstract var end: Int?
+
+    abstract var type: String
 
     /**
      * TODO: Documentation
      */
-    class Bold(
-        start: Int? = null,
-        end: Int? = null
-    ) : TextFormat(start, end) {
+    @JsonClass(generateAdapter = true)
+    class Bold constructor(
+        @Json(name = "start")
+        override var start: Int? = null,
+        @Json(name = "end")
+        override var end: Int? = null
+    ) : TextFormat() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "bold"
         }
+
+        override var type: String = KEY
     }
 
     /**
      * TODO: Documentation
      */
-    class Italic(
-        start: Int? = null,
-        end: Int? = null
-    ) : TextFormat(start, end) {
+    @JsonClass(generateAdapter = true)
+    class Italic constructor(
+        @Json(name = "start")
+        override var start: Int? = null,
+        @Json(name = "end")
+        override var end: Int? = null
+    ) : TextFormat() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "italic"
         }
+
+        override var type: String = KEY
     }
 
     /**
      * TODO: Documentation
      */
-    class StrikeThrough(
-        start: Int? = null,
-        end: Int? = null
-    ) : TextFormat(start, end) {
+    @JsonClass(generateAdapter = true)
+    class StrikeThrough constructor(
+        @Json(name = "start")
+        override var start: Int? = null,
+        @Json(name = "end")
+        override var end: Int? = null
+    ) : TextFormat() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "strikethrough"
         }
+
+        override var type: String = KEY
     }
 
     /**
@@ -83,17 +92,20 @@ sealed class TextFormat(
      *
      * @param url The link's URL!
      */
-    class Link(
-        start: Int? = null,
-        end: Int? = null,
+    @JsonClass(generateAdapter = true)
+    class Link constructor(
+        @Json(name = "start")
+        override var start: Int? = null,
+        @Json(name = "end")
+        override var end: Int? = null,
+        @Json(name = "url")
         var url: String? = null
-    ) : TextFormat(start, end) {
+    ) : TextFormat() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "link"
         }
+
+        override var type: String = KEY
     }
 
     /**
@@ -101,17 +113,20 @@ sealed class TextFormat(
      *
      * @param blog An object with a uuid field, which is the mentioned blog's UUID.
      */
-    class Mention(
-        start: Int? = null,
-        end: Int? = null,
+    @JsonClass(generateAdapter = true)
+    class Mention constructor(
+        @Json(name = "start")
+        override var start: Int? = null,
+        @Json(name = "end")
+        override var end: Int? = null,
+        @Json(name = "blog")
         var blog: Blog? = null
-    ) : TextFormat(start, end) {
+    ) : TextFormat() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "mention"
         }
+
+        override var type: String = KEY
     }
 
     /**
@@ -119,17 +134,20 @@ sealed class TextFormat(
      *
      * @param hex The color to use, in standard hex format, with leading '#'.
      */
-    class Color(
-        start: Int? = null,
-        end: Int? = null,
+    @JsonClass(generateAdapter = true)
+    class Color constructor(
+        @Json(name = "start")
+        override var start: Int? = null,
+        @Json(name = "end")
+        override var end: Int? = null,
+        @Json(name = "hex")
         @HexColorOctothorpe var hex: com.highthunder.kotlr.types.Color? = null
-    ) : TextFormat(start, end) {
+    ) : TextFormat() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "color"
         }
+
+        override var type: String = KEY
     }
 
     /**
@@ -137,17 +155,20 @@ sealed class TextFormat(
      *
      * @param size The text size for this particular range of text, one of 'small' or 'big'.
      */
-    class Size(
-        start: Int? = null,
-        end: Int? = null,
+    @JsonClass(generateAdapter = true)
+    class Size constructor(
+        @Json(name = "start")
+        override var start: Int? = null,
+        @Json(name = "end")
+        override var end: Int? = null,
+        @Json(name = "size")
         var size: Option? = null
-    ) : TextFormat(start, end) {
+    ) : TextFormat() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "size"
         }
+
+        override var type: String = KEY
 
         /**
          * TODO: Documentation

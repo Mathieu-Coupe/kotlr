@@ -1,6 +1,8 @@
 package com.highthunder.kotlr.types
 
 import com.highthunder.kotlr.types.content.TextFormat
+import com.squareup.moshi.Json
+import com.squareup.moshi.JsonClass
 
 /**
  * NoteData - TODO: Documentation
@@ -8,59 +10,73 @@ import com.highthunder.kotlr.types.content.TextFormat
  * @author highthunder
  * @since 11/3/18
  * @version 1.0.0
- *
- * @param timestamp TODO: Documentation
- * @param blogName TODO: Documentation
- * @param blogUuid TODO: Documentation
- * @param blogUrl TODO: Documentation
- * @param blogFollowed TODO: Documentation
- * @param avatarShape TODO: Documentation
  */
-sealed class NoteData(
-    var timestamp: Long? = null,
-    var blogName: String? = null,
-    var blogUuid: String? = null,
-    var blogUrl: String? = null,
-    var blogFollowed: Boolean? = null,
-    var avatarShape: String? = null
-) {
+sealed class NoteData {
+    @Json(name = "type")
+    abstract var type: String?
+    @Json(name = "timestamp")
+    abstract var timestamp: Long?
+    @Json(name = "blog_name")
+    abstract var blogName: String?
+    @Json(name = "blog_uuid")
+    abstract var blogUuid: String?
+    @Json(name = "blog_url")
+    abstract var blogUrl: String?
+    @Json(name = "followed")
+    abstract var blogFollowed: Boolean?
+    @Json(name = "avatar_shape")
+    abstract var avatarShape: String?
 
     /**
      * TODO: Documentation
      */
-    class Like(
-        timestamp: Long? = null,
-        blogName: String? = null,
-        blogUuid: String? = null,
-        blogUrl: String? = null,
-        blogFollowed: Boolean? = null,
-        avatarShape: String? = null
-    ) : NoteData(timestamp, blogName, blogUuid, blogUrl, blogFollowed, avatarShape) {
+    @JsonClass(generateAdapter = true)
+    class Like constructor(
+        @Json(name = "timestamp")
+        override var timestamp: Long? = null,
+        @Json(name = "blog_name")
+        override var blogName: String? = null,
+        @Json(name = "blog_uuid")
+        override var blogUuid: String? = null,
+        @Json(name = "blog_url")
+        override var blogUrl: String? = null,
+        @Json(name = "followed")
+        override var blogFollowed: Boolean? = null,
+        @Json(name = "avatar_shape")
+        override var avatarShape: String? = null
+    ) : NoteData() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "like"
         }
+
+        @Json(name = "type")
+        override var type: String? = KEY
     }
 
     /**
      * TODO: Documentation
      */
-    class Posted(
-        timestamp: Long? = null,
-        blogName: String? = null,
-        blogUuid: String? = null,
-        blogUrl: String? = null,
-        blogFollowed: Boolean? = null,
-        avatarShape: String? = null
-    ) : NoteData(timestamp, blogName, blogUuid, blogUrl, blogFollowed, avatarShape) {
+    @JsonClass(generateAdapter = true)
+    class Posted constructor(
+        @Json(name = "timestamp")
+        override var timestamp: Long? = null,
+        @Json(name = "blog_name")
+        override var blogName: String? = null,
+        @Json(name = "blog_uuid")
+        override var blogUuid: String? = null,
+        @Json(name = "blog_url")
+        override var blogUrl: String? = null,
+        @Json(name = "followed")
+        override var blogFollowed: Boolean? = null,
+        @Json(name = "avatar_shape")
+        override var avatarShape: String? = null
+    ) : NoteData() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "posted"
         }
+
+        @Json(name = "type")
+        override var type: String? = KEY
     }
 
     /**
@@ -69,22 +85,35 @@ sealed class NoteData(
      * @param postId TODO: Documentation
      * @param reblogParentBlogName TODO: Documentation
      */
-    class Reblog(
-        timestamp: Long? = null,
-        blogName: String? = null,
-        blogUuid: String? = null,
-        blogUrl: String? = null,
-        blogFollowed: Boolean? = null,
-        avatarShape: String? = null,
+    @JsonClass(generateAdapter = true)
+    class Reblog constructor(
+        @Json(name = "timestamp")
+        override var timestamp: Long? = null,
+        @Json(name = "blog_name")
+        override var blogName: String? = null,
+        @Json(name = "blog_uuid")
+        override var blogUuid: String? = null,
+        @Json(name = "blog_url")
+        override var blogUrl: String? = null,
+        @Json(name = "followed")
+        override var blogFollowed: Boolean? = null,
+        @Json(name = "avatar_shape")
+        override var avatarShape: String? = null,
+        @Json(name = "post_id")
         var postId: String? = null,
-        var reblogParentBlogName: String? = null
-    ) : NoteData(timestamp, blogName, blogUuid, blogUrl, blogFollowed, avatarShape) {
+        @Json(name = "added_text")
+        var addedText: String? = null,
+        @Json(name = "reblog_parent_blog_name")
+        var reblogParentBlogName: String? = null,
+        @Json(name = "can_block")
+        var canBlock: Boolean? = null
+    ) : NoteData() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "reblog"
         }
+
+        @Json(name = "type")
+        override var type: String? = KEY
     }
 
     /**
@@ -94,23 +123,33 @@ sealed class NoteData(
      * @param formatting TODO: Documentation
      * @param canBlock TODO: Documentation
      */
-    class Reply(
-        timestamp: Long? = null,
-        blogName: String? = null,
-        blogUuid: String? = null,
-        blogUrl: String? = null,
-        blogFollowed: Boolean? = null,
-        avatarShape: String? = null,
+    @JsonClass(generateAdapter = true)
+    class Reply constructor(
+        @Json(name = "timestamp")
+        override var timestamp: Long? = null,
+        @Json(name = "blog_name")
+        override var blogName: String? = null,
+        @Json(name = "blog_uuid")
+        override var blogUuid: String? = null,
+        @Json(name = "blog_url")
+        override var blogUrl: String? = null,
+        @Json(name = "followed")
+        override var blogFollowed: Boolean? = null,
+        @Json(name = "avatar_shape")
+        override var avatarShape: String? = null,
+        @Json(name = "reply_text")
         var replyText: String? = null,
+        @Json(name = "formatting")
         var formatting: List<TextFormat>? = null,
+        @Json(name = "can_block")
         var canBlock: Boolean? = null
-    ) : NoteData(timestamp, blogName, blogUuid, blogUrl, blogFollowed, avatarShape) {
+    ) : NoteData() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "reply"
         }
+
+        @Json(name = "type")
+        override var type: String? = KEY
     }
 
     /**
@@ -122,24 +161,38 @@ sealed class NoteData(
      * @param photoWidth TODO: Documentation
      * @param photoHeight TODO: Documentation
      */
-    class Attribution(
-        timestamp: Long? = null,
-        blogName: String? = null,
-        blogUuid: String? = null,
-        blogUrl: String? = null,
-        blogFollowed: Boolean? = null,
-        avatarShape: String? = null,
+    @JsonClass(generateAdapter = true)
+    class Attribution constructor(
+        @Json(name = "timestamp")
+        override var timestamp: Long? = null,
+        @Json(name = "blog_name")
+        override var blogName: String? = null,
+        @Json(name = "blog_uuid")
+        override var blogUuid: String? = null,
+        @Json(name = "blog_url")
+        override var blogUrl: String? = null,
+        @Json(name = "followed")
+        override var blogFollowed: Boolean? = null,
+        @Json(name = "avatar_shape")
+        override var avatarShape: String? = null,
+        @Json(name = "post_id")
+        var postId: String? = null,
+        @Json(name = "post_attribution_type")
         var postAttributionType: String? = null,
+        @Json(name = "post_attribution_type_name")
         var postAttributionTypeName: String? = null,
+        @Json(name = "photo_url")
         var photoUrl: String? = null,
+        @Json(name = "photo_width")
         var photoWidth: Int? = null,
+        @Json(name = "photo_height")
         var photoHeight: Int? = null
-    ) : NoteData(timestamp, blogName, blogUuid, blogUrl, blogFollowed, avatarShape) {
+    ) : NoteData() {
         companion object {
-            /**
-             * TODO: Documentation
-             */
             const val KEY: String = "post_attribution"
         }
+
+        @Json(name = "type")
+        override var type: String? = KEY
     }
 }
